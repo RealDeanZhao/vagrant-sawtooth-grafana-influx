@@ -14,29 +14,28 @@ Vagrant.configure("2") do |config|
   # 安装sawtooth
   config.vm.provision "shell", path: "install_sawtooth.sh"
 
-  config.vm.define "first" do |first|
-      $ip = $seed_ip
-      first.vm.hostname = "xyd-sawtooth-node-1"
-      first.vm.network "private_network", ip: $ip
-      # 第一台机器安装grafana
-      first.vm.provision "shell", path: "install_grafana.sh"
-      # 第一台机器安装influx_db
-      config.vm.provision "shell", path: "install_influx.sh"
-      # 配置sawtooth
-      first.vm.provision "shell" do |s|
-        s.path="config_sawtooth.sh"
-        s.args= [$ip, 0]
+  N = 2
+  (0..N).each do |node_id|
+    config.vm.define "xyd-sawtooth-node-#{node_id}" do |node|
+      $ip = "192.168.57.#{101+node_id}"
+      node.vm.hostname = "xyd-sawtooth-node-#{node_id}"
+      node.vm.network "private_network", ip: $ip
+      if node_id == 0
+        # 第一台机器安装grafana
+        node.vm.provision "shell", path: "install_grafana.sh"
+        # 第一台机器安装influx_db
+        config.vm.provision "shell", path: "install_influx.sh"
+        # 配置sawtooth
+        node.vm.provision "shell" do |s|
+          s.path="config_sawtooth.sh"
+          s.args= [$ip, 0]
+        end
+      else
+        node.vm.provision "shell" do |s|
+          s.path="config_sawtooth.sh"
+          s.args= [$ip, 1, $seed_ip]
+        end
       end
-  end
-
-  config.vm.define "second" do |second|
-    $ip = "192.168.57.102"
-    second.vm.hostname = "xyd-sawtooth-node-2"
-    second.vm.network "private_network", ip: $ip
-    # 配置sawtooth
-    second.vm.provision "shell" do |s|
-      s.path="config_sawtooth.sh"
-      s.args= [$ip, 1, $seed_ip]
     end
   end
 
