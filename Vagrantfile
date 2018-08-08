@@ -56,12 +56,12 @@ Vagrant.configure("2") do |config|
         # 配置sawtooth
         node.vm.provision "shell" do |s|
           s.path="config_sawtooth.sh"
-          s.args= [$ip, ""]
+          s.args= [$ip, "", $influx_ip]
         end
       else
         node.vm.provision "shell" do |s|
           s.path="config_sawtooth.sh"
-          s.args= [$ip, $seed_ip]
+          s.args= [$ip, $seed_ip, $influx_ip]
         end
       end
       # 安装telegraf

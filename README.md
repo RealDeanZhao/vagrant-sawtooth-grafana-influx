@@ -16,7 +16,7 @@ vagrant ssh xyd-sawtooth-dev-build
 sudo su
 ```
 
-编译好的transaction processor可以放到/share目录下, 这样其他虚拟机也可以访问
+编译好的transaction processor可以放到/share/bin目录下, 这样其他虚拟机也可以访问
 
 ### xyd-sawtooth-grafana-influx
 这台机器安装了性能监控工具
