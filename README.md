@@ -27,6 +27,9 @@ sudo su
 
 ### xyd-sawtooth-node-*
 这些是sawtooth的validator节点
+```
+vagrant ssh xyd-sawtooth-node-1
+```
 
 ## 需要翻墙
 在创建xyd-sawtooth-dev-build的时候需要翻墙....
