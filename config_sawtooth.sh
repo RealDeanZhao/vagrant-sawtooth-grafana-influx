@@ -62,10 +62,6 @@ systemctl restart sawtooth-settings-tp
 systemctl restart sawtooth-xo-tp-python
 systemctl restart sawtooth-rest-api
 
-chown sawtooth:sawtooth /var/lib/sawtooth/poet*
-
-sawtooth keygen jack
-sawtooth keygen jill
-sawtooth keygen john
+#chown sawtooth:sawtooth /var/lib/sawtooth/poet*
 
 echo "Sawtooth configured........"

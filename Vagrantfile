@@ -6,7 +6,8 @@ Vagrant.configure("2") do |config|
   $seed_ip = "192.168.57.101"
   # 设置虚拟机参数
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = "512"
+    vb.memory = "1024"
+    vb.cpus = 4
   end
 
   # 配置阿里云源
@@ -27,7 +28,7 @@ Vagrant.configure("2") do |config|
   # 代码目录
   config.vm.synced_folder "coderepos", "/coderepos"
 
-  N = 1
+  N = 2
   (0..N).each do |node_id|
     config.vm.define "xyd-sawtooth-node-#{node_id}" do |node|
       $ip = "192.168.57.#{101+node_id}"
