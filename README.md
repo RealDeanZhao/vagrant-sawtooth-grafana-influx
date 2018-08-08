@@ -16,7 +16,7 @@ vagrant ssh xyd-sawtooth-dev-build
 sudo su
 ```
 
-编译好的transaction processor可以放到/share目录下, 这样其他虚拟机也可以访问
+编译好的transaction processor可以放到/share目录下, 这样其他虚拟机也可以访问
 
 ### xyd-sawtooth-grafana-influx
 这台机器安装了性能监控工具
@@ -25,7 +25,7 @@ sudo su
 
 初始账号密码: admin/admin
 
-### xyd-sawtooth-node-*
+### xyd-sawtooth-node-*
 这些是sawtooth的validator节点
 ```
 vagrant ssh xyd-sawtooth-node-1
