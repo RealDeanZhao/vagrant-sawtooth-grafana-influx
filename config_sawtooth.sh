@@ -1,5 +1,8 @@
 
 #!/bin/bash
+# $1 本机ip
+# $2 seed_ip
+# $3 influxdb_ip
 echo "Configuring sawtooth........"
 tee /etc/sawtooth/validator.toml <<- EOF
 bind = [
@@ -15,10 +18,10 @@ opentsdb_password = "lrdata-pw"
 EOF
 
 # 如果是其他节点, 那么则需要配置seeds
-if [ $2 -eq 1 ]; then
+if [ $2 != "" ]; then
   tee -a /etc/sawtooth/validator.toml <<- EOF
 seeds = [
-  "tcp://$3:8800"
+  "tcp://$2:8800"
 ]
 EOF
 fi
@@ -36,12 +39,12 @@ bind = [
   "0.0.0.0:8008"
 ]
 
-connect = "tcp://127.0.0.1:4004"
+connect = "tcp://0.0.0.0:4004"
 EOF
 
 sawtooth keygen
 sawadm keygen
-if [ $2 -eq 0 ]; then
+if [ $2 != "" ]; then
   # 生成genesis配置
   sawset genesis
   # 生成poet的配置
@@ -57,8 +60,8 @@ if [ $2 -eq 0 ]; then
 fi
 
 systemctl restart sawtooth-validator
-systemctl restart sawtooth-poet-validator-registry-tp
 systemctl restart sawtooth-settings-tp
+systemctl restart sawtooth-poet-validator-registry-tp
 systemctl restart sawtooth-xo-tp-python
 systemctl restart sawtooth-rest-api
 

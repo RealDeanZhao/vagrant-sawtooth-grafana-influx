@@ -1,4 +1,6 @@
 #!/bin/bash
+# $1 grafana_ip
+# $2 influx_ip
 echo "Installing grafana........."
 
 apt-get install -y adduser libfontconfig
@@ -9,7 +11,7 @@ sudo systemctl enable grafana-server
 sudo systemctl enable grafana-server.service
 sudo systemctl start grafana-server
 
-timeout 10 bash -c "until </dev/tcp/192.168.57.101/3000; do sleep 1; done"
+timeout 10 bash -c "until </dev/tcp/$1/3000; do sleep 1; done"
 
 curl -i -H "Content-Type: application/json" \
     --user admin:admin \
@@ -20,7 +22,7 @@ curl -i -H "Content-Type: application/json" \
         "password": "lrdata-pw", 
         "user": "lrdata", 
         "type": "influxdb", 
-        "url": "http://'$1':8086",
+        "url": "http://'$2':8086",
         "access": "proxy"
     }'
 

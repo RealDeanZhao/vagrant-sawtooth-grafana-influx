@@ -1,6 +1,13 @@
 #!/bin/bash
-
-apt-get install -y --allow \
+# $1 fuck GFW?
+# $2 shadowsocks proxy ip
+# $3 shadowsocks proxy port
+apt-get install -y \
+    libtool \
+    pkg-config \
+    autoconf \
+    automake \
+    uuid-dev \
     libssl-dev \
     libzmq3-dev \
     openssl \
@@ -21,14 +28,9 @@ if [ $1 -eq 1 ]; then
 fi
 
 bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
-gvm install go1.10.2
+source /root/.gvm/scripts/gvm
+gvm install go1.10.2 -B
 gvm use go1.10.2 --default
-# sudo -u vagrant -H bash -c 'echo "source /home/vagrant/.gvm/scripts/gvm" >> /home/vagrant/.bashrc'
-# sudo -u vagrant -H bash -c 'source /home/vagrant/.gvm/scripts/gvm; gvm install go1.10.2'
-# sudo -u vagrant -H bash -c 'source /home/vagrant/.gvm/scripts/gvm; gvm use go1.10.2 --default'
-# sudo -u vagrant -H bash -c 'source /home/vagrant/.gvm/scripts/gvm; go get github.com/kr/godep'
-
-# source /home/vagrant/.gvm/scripts/gvm
 
 go get -u github.com/hyperledger/sawtooth-sdk-go \
     github.com/btcsuite/btcd/btcec \
