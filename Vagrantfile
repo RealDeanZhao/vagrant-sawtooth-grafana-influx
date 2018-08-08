@@ -72,6 +72,6 @@ Vagrant.configure("2") do |config|
     end
   end
   
-  # 设置镜像
+  # 设置镜像, 目前sawtooth只支持到16.04, 更高版本不能用
   config.vm.box = "ubuntu/xenial64"
 end
