@@ -47,9 +47,9 @@ Vagrant.configure("2") do |config|
   end
 
   N = 2
-  (0..N).each do |node_id|
+  (1..N).each do |node_id|
     config.vm.define "xyd-sawtooth-node-#{node_id}" do |node|
-      $ip = "192.168.57.#{101+node_id}"
+      $ip = "192.168.57.#{100+node_id}"
       node.vm.hostname = "xyd-sawtooth-node-#{node_id}"
       node.vm.network "private_network", ip: $ip
       if node_id == 0

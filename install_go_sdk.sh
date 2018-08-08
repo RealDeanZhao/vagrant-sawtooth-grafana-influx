@@ -16,11 +16,14 @@ apt-get install -y \
     python3-grpcio \
     python3-grpcio-tools \
     python3-pkg-resources \
+
+apt-get install -y \
     curl \
     make \
     binutils \
     bison \
     gcc 
+    
 
 if [ $1 -eq 1 ]; then
     export http_proxy=http://$2:$3
@@ -39,8 +42,9 @@ go get -u github.com/hyperledger/sawtooth-sdk-go \
     github.com/golang/mock/gomock \
     github.com/golang/mock/mockgen \
     github.com/pebbe/zmq4 \
-    github.com/satori/go.uuid
-
+    github.com/satori/go.uuid \
+    github.com/brianolson/cbor_go \
+    github.com/jessevdk/go-flags
 
 cd $GOPATH/src/github.com/hyperledger/sawtooth-sdk-go
 go generate

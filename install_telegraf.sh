@@ -1,4 +1,5 @@
 #!/bin/bash
+# $1 influx_ip
 echo "Installing telegraf......."
 apt-get install -y telegraf
 
