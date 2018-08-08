@@ -45,7 +45,7 @@ Vagrant.configure("2") do |config|
         # 配置sawtooth
         node.vm.provision "shell" do |s|
           s.path="config_sawtooth.sh"
-          s.args= [$ip, 0]
+          s.args= [$ip, 0, $seed_ip]
         end
       else
         node.vm.provision "shell" do |s|
