@@ -4,14 +4,14 @@ echo "Configuring sawtooth........"
 tee /etc/sawtooth/validator.toml <<- EOF
 bind = [
     "network:tcp://$1:8800",
-    "component:tcp://127.0.0.1:4004"
+    "component:tcp://0.0.0.0:4004"
 ]
 peering = "dynamic"
 endpoint = "tcp://$1:8800"
-opentsdb_url = "http://127.0.0.1:3000"
-opentsdb_db = "metrics"
+opentsdb_url = "http://$3:8086"
+opentsdb_db = "sawtooth_metrics"
 opentsdb_username = "lrdata"
-opentsdb_password = "lrdata_pw"
+opentsdb_password = "lrdata-pw"
 EOF
 
 # 如果是其他节点, 那么则需要配置seeds
@@ -24,7 +24,11 @@ EOF
 fi
 
 tee /etc/sawtooth/settings.toml <<- 'EOF'
-connect = "tcp://127.0.0.1:4004"
+connect = "tcp://0.0.0.0:4004"
+EOF
+
+tee /etc/sawtooth/xo.toml <<- 'EOF'
+connect = "tcp://0.0.0.0:4004"
 EOF
 
 tee /etc/sawtooth/rest_api.toml <<- 'EOF'
@@ -55,5 +59,13 @@ fi
 systemctl restart sawtooth-validator
 systemctl restart sawtooth-poet-validator-registry-tp
 systemctl restart sawtooth-settings-tp
+systemctl restart sawtooth-xo-tp-python
 systemctl restart sawtooth-rest-api
+
+chown sawtooth:sawtooth /var/lib/sawtooth/poet*
+
+sawtooth keygen jack
+sawtooth keygen jill
+sawtooth keygen john
+
 echo "Sawtooth configured........"

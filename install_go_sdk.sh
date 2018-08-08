@@ -1,5 +1,6 @@
 #!/bin/bash
-apt-get install -y golang-1.10-go \
+
+apt-get install -y --allow \
     libssl-dev \
     libzmq3-dev \
     openssl \
@@ -7,16 +8,27 @@ apt-get install -y golang-1.10-go \
     python3 \
     python3-grpcio \
     python3-grpcio-tools \
-    python3-pkg-resources
+    python3-pkg-resources \
+    curl \
+    make \
+    binutils \
+    bison \
+    gcc 
 
-# echo "GOPATH=/home/vagrant/go"  >> /home/vagrant/.profile
-echo "PATH=$HOME/bin:$HOME/.local/bin:/root/go/bin:/usr/lib/go-1.10/bin:$PATH"  >> /home/vagrant/.profile
 if [ $1 -eq 1 ]; then
-    echo "export http_proxy=http://$2:$3"  >> /home/vagrant/.profile
-    echo "export https_proxy=http://$2:$3" >> /home/vagrant/.profile
+    export http_proxy=http://$2:$3
+    export https_proxy=http://$2:$3
 fi
 
-source /home/vagrant/.profile
+bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+gvm install go1.10.2
+gvm use go1.10.2 --default
+# sudo -u vagrant -H bash -c 'echo "source /home/vagrant/.gvm/scripts/gvm" >> /home/vagrant/.bashrc'
+# sudo -u vagrant -H bash -c 'source /home/vagrant/.gvm/scripts/gvm; gvm install go1.10.2'
+# sudo -u vagrant -H bash -c 'source /home/vagrant/.gvm/scripts/gvm; gvm use go1.10.2 --default'
+# sudo -u vagrant -H bash -c 'source /home/vagrant/.gvm/scripts/gvm; go get github.com/kr/godep'
+
+# source /home/vagrant/.gvm/scripts/gvm
 
 go get -u github.com/hyperledger/sawtooth-sdk-go \
     github.com/btcsuite/btcd/btcec \
@@ -27,5 +39,11 @@ go get -u github.com/hyperledger/sawtooth-sdk-go \
     github.com/pebbe/zmq4 \
     github.com/satori/go.uuid
 
-cd /root/go/src/github.com/hyperledger/sawtooth-sdk-go
+
+cd $GOPATH/src/github.com/hyperledger/sawtooth-sdk-go
 go generate
+
+if [ $1 -eq 1 ]; then
+    unset http_proxy
+    unset https_proxy
+fi
