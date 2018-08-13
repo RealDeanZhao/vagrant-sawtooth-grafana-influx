@@ -21,8 +21,8 @@ Vagrant.configure("2") do |config|
 
   # 共享目录
   config.vm.synced_folder "./share", "/share"
-  config.vm.synced_folder "~/vagrant-share", "/share"
-  
+  config.vm.synced_folder "~/vagrant-share", "/vagrant-share"
+
   # 专门用来编译go transaction processor的机器
   # 如果你不想在虚拟机里面编译代码, 可以使用zestxjest/sawtooth-go-tp-builder这个docker镜像来帮忙编译
   # config.vm.define "xyd-sawtooth-dev-build" do |build|
