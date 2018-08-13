@@ -40,6 +40,10 @@ bind = [
 ]
 
 connect = "tcp://0.0.0.0:4004"
+opentsdb_url = "http://$3:8086"
+opentsdb_db = "sawtooth_metrics"
+opentsdb_username = "lrdata"
+opentsdb_password = "lrdata-pw"
 EOF
 
 sawtooth keygen
