@@ -20,18 +20,21 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", path: "install_sawtooth.sh"
 
   # 共享目录
-  config.vm.synced_folder "share", "/share"
-
+  config.vm.synced_folder "./share", "/share"
+  config.vm.synced_folder "~/vagrant-share", "/share"
+  
   # 专门用来编译go transaction processor的机器
-  config.vm.define "xyd-sawtooth-dev-build" do |build|
-    build.vm.hostname = "xyd-sawtooth-dev-build"
-    build.vm.network "private_network", ip: $dev_ip
-     # sawtooth go 的编译环境
-    build.vm.provision "shell" do |s|
-      s.path="install_go_sdk.sh"
-      s.args= [1, $host_ip, 1081]
-    end
-  end
+  # 如果你不想在虚拟机里面编译代码, 可以使用zestxjest/sawtooth-go-tp-builder这个docker镜像来帮忙编译
+  # config.vm.define "xyd-sawtooth-dev-build" do |build|
+  #   build.vm.hostname = "xyd-sawtooth-dev-build"
+  #   build.vm.network "private_network", ip: $dev_ip
+
+  #   # sawtooth go 的编译环境
+  #   build.vm.provision "shell" do |s|
+  #     s.path="install_go_sdk.sh"
+  #     s.args= [1, $host_ip, 1081]
+  #   end
+  # end
 
   # grafana和influx都安装在这个机器上
   config.vm.define "xyd-sawtooth-grafana-influx" do |gi|

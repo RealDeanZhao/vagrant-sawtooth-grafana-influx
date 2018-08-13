@@ -4,8 +4,15 @@ Sawtooth with grafana and influx
 ## 安装Vagrant
 [从这儿下载](https://www.vagrantup.com/downloads.html)
 
+## 启动依赖
+1. synced folder
+```
+mkdir ~/vagrant-share
+```
 ## 机器说明
 ### xyd-sawtooth-dev-build
+如果需要启用此机器, 需要取消vagrant file里面的那段注释.
+
 这台虚拟机安装了编译一个sawtooth trasaction processor所必须要的依赖.
 
 当然如果你们自己写的processor里面有其他依赖, 请ssh到此机器手动安装
