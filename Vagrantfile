@@ -47,6 +47,8 @@ Vagrant.configure("2") do |config|
     end 
     # 安装influx_db
     gi.vm.provision "shell", path: "install_influx.sh"
+    # 安装sawtooth-explorer
+    gi.vm.provision "shell", path: "install_sawtooth_explorer.sh"
   end
 
   N = 2
