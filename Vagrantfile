@@ -57,7 +57,7 @@ Vagrant.configure("2") do |config|
       $ip = "192.168.57.#{100+node_id}"
       node.vm.hostname = "xyd-sawtooth-node-#{node_id}"
       node.vm.network "private_network", ip: $ip
-      if node_id == 0
+      if node_id == 1
         # 配置sawtooth
         node.vm.provision "shell" do |s|
           s.path="config_sawtooth.sh"

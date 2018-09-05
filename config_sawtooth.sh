@@ -18,7 +18,7 @@ opentsdb_password = "lrdata-pw"
 EOF
 
 # 如果是其他节点, 那么则需要配置seeds
-if [ $2 != "" ]; then
+if [[ $2 != "" ]]; then
   tee -a /etc/sawtooth/validator.toml <<- EOF
 seeds = [
   "tcp://$2:8800"
@@ -34,7 +34,7 @@ tee /etc/sawtooth/xo.toml <<- 'EOF'
 connect = "tcp://0.0.0.0:4004"
 EOF
 
-tee /etc/sawtooth/rest_api.toml <<- 'EOF'
+tee /etc/sawtooth/rest_api.toml <<- EOF
 bind = [
   "0.0.0.0:8008"
 ]
@@ -48,7 +48,7 @@ EOF
 
 sawtooth keygen
 sawadm keygen
-if [ $2 != "" ]; then
+if [[ $2 = "" ]]; then
   # 生成genesis配置
   sawset genesis
   # 生成poet的配置
@@ -69,6 +69,12 @@ systemctl restart sawtooth-poet-validator-registry-tp
 systemctl restart sawtooth-xo-tp-python
 systemctl restart sawtooth-rest-api
 
+sleep 20s
+chown sawtooth:sawtooth /var/lib/sawtooth/poet*
+
+nohup seth-tp -vv -C tcp://0.0.0.0:4004 &
+nohup seth-rpc --connect tcp://0.0.0.0:4004 --bind 0.0.0.0:3030 &
+nohup seth init http://0.0.0.0:8008 &
 #chown sawtooth:sawtooth /var/lib/sawtooth/poet*
 
 echo "Sawtooth configured........"
