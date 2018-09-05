@@ -71,6 +71,7 @@ systemctl restart sawtooth-rest-api
 
 sleep 20s
 chown sawtooth:sawtooth /var/lib/sawtooth/poet*
+systemctl restart sawtooth-validator
 
 nohup seth-tp -vv -C tcp://0.0.0.0:4004 &
 nohup seth-rpc --connect tcp://0.0.0.0:4004 --bind 0.0.0.0:3030 &
