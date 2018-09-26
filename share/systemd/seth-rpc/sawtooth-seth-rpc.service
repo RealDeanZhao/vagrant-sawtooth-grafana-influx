@@ -1,0 +1,13 @@
+[Unit]
+Description=Sawtooth Seth RPC
+After=network.target
+
+[Service]
+User=sawtooth
+Group=sawtooth
+EnvironmentFile=-/etc/default/sawtooth-seth-rpc
+ExecStart=/usr/bin/seth-rpc $SAWTOOTH_SETH_RPC_ARGS
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

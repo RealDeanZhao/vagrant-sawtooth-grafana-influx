@@ -1,0 +1,13 @@
+[Unit]
+Description=Sawtooth Seth TP
+After=network.target
+
+[Service]
+User=sawtooth
+Group=sawtooth
+EnvironmentFile=-/etc/default/sawtooth-seth-tp
+ExecStart=/usr/bin/seth-tp $SAWTOOTH_SETH_TP_ARGS
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

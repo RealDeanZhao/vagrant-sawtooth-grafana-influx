@@ -69,13 +69,19 @@ systemctl restart sawtooth-poet-validator-registry-tp
 systemctl restart sawtooth-xo-tp-python
 systemctl restart sawtooth-rest-api
 
-sleep 20s
+sleep 10s
 chown sawtooth:sawtooth /var/lib/sawtooth/poet*
 systemctl restart sawtooth-validator
 
-nohup seth-tp -vv -C tcp://0.0.0.0:4004 &
-nohup seth-rpc --connect tcp://0.0.0.0:4004 --bind 0.0.0.0:3030 &
-nohup seth init http://0.0.0.0:8008 &
-#chown sawtooth:sawtooth /var/lib/sawtooth/poet*
+# cp /share/seth-bin/seth /usr/bin
+# cp /share/seth-bin/seth-rpc /usr/bin
+# cp /share/seth-bin/seth-tp /usr/bin
+
+# cp /share/systemd/seth-tp/sawtooth-seth-tp.service /lib/systemd/system/
+# cp /share/systemd/seth-tp/sawtooth-seth-tp /etc/default/
+
+
+# systemctl enable sawtooth-seth-tp
+# systemctl start sawtooth-seth-tp
 
 echo "Sawtooth configured........"

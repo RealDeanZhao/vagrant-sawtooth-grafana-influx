@@ -1,0 +1,1 @@
+SAWTOOTH_SETH_TP_ARGS=-vv -C tcp://0.0.0.0:4004
