@@ -1,6 +1,7 @@
 #!/bin/bash
 
-sed -i 's/http:\/\/archive.ubuntu.com\/ubuntu\//http:\/\/mirrors.aliyun.com\/ubuntu\//g' /etc/apt/sources.list
+sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
+sed -i 's/security.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
 
 curl -sL https://mirrors.tuna.tsinghua.edu.cn/influxdata/influxdb.key | apt-key add -
 apt-add-repository "deb https://mirrors.tuna.tsinghua.edu.cn/influxdata/ubuntu xenial stable"
